@@ -13,7 +13,7 @@ public class FallowCamera : MonoBehaviour
     }
 
 
-    void Update()
+    void LateUpdate()
     {
         transform.position = _target.position;
         
