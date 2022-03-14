@@ -11,8 +11,13 @@ namespace RPG.Combat
     {
         Transform target;
         [SerializeField] float weaponRange = 2f;
+        [SerializeField] float  timeBetweenAttacks = 1f;
+        float timeSinceLastAttack;
+        float weaponDamage = 20;
         private void Update()
         {
+
+            timeSinceLastAttack += Time.deltaTime;
 
             if (target == null) return;
 
@@ -26,14 +31,45 @@ namespace RPG.Combat
                 //maybe try to find a way to check if the movement is already cancelled so we are not calling this func repetetivly 
                
                     GetComponent<Mover>().Cancel();
-                    AttackBehaviour();
+
+                        AttackBehaviour();
+                
+                    
 
             }
 
         }
         private void AttackBehaviour()
         {
-            GetComponent<Animator>().SetTrigger("attack");
+            if (timeSinceLastAttack > timeBetweenAttacks)
+            {
+                //This will Trigger the Hit() event
+              GetComponent<Animator>().SetTrigger("attack");
+                timeSinceLastAttack = 0;
+
+                //Health healthComponent = target.GetComponent<Health>();
+                //if (healthComponent == null)
+                //{
+                //    Debug.Log("Failed To Get Reference:healthComponent");
+                //    healthComponent.TakeDamage(weaponDamage);
+                //}
+
+            } 
+        }
+
+        //Animation Hit Event
+        void Hit()
+        {
+            Health healthComponent = target.GetComponent<Health>();
+            if(healthComponent == null)
+            {
+                Debug.Log("Failed To Get Reference:healthComponent");
+               
+            }
+            else
+            {
+                healthComponent.TakeDamage(weaponDamage);
+            }
         }
 
         private bool GetIsInRange()
@@ -56,11 +92,8 @@ namespace RPG.Combat
 
         }
         
-        //Animation Hit Event
-        void Hit()
-        {
-
-        }
+        
+     
 
     }
 
