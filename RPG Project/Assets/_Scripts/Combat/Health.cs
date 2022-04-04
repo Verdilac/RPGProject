@@ -10,6 +10,10 @@ public class Health : MonoBehaviour
      [SerializeField]   float healthPoints = 100f;
         private bool isAlive = true;  
 
+        public bool GetisAlive()
+        {
+            return isAlive;
+        }
 
      public void TakeDamage(float damage)
      {

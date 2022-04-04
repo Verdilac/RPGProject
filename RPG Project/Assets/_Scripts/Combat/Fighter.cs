@@ -9,7 +9,7 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour,IAction
     {
-        Transform target;
+        Health target;
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float  timeBetweenAttacks = 1f;
         float timeSinceLastAttack;
@@ -20,10 +20,11 @@ namespace RPG.Combat
             timeSinceLastAttack += Time.deltaTime;
 
             if (target == null) return;
+            if (!target.GetisAlive()) return;
 
             if (!GetIsInRange())
             {
-                GetComponent<Mover>().MoveTo(target.position);
+                GetComponent<Mover>().MoveTo(target.transform.position);
                 
             }
             else
@@ -60,34 +61,27 @@ namespace RPG.Combat
         //Animation Hit Event
         void Hit()
         {
-            Health healthComponent = target.GetComponent<Health>();
-            if(healthComponent == null)
-            {
-                Debug.Log("Failed To Get Reference:healthComponent");
-               
-            }
-            else
-            {
-                healthComponent.TakeDamage(weaponDamage);
-            }
+
+            target.TakeDamage(weaponDamage);
         }
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.position) < weaponRange;
+            return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
         }
 
         public void Attack(CombatTarget combatTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
             Debug.Log("Be Gone Thot");
-            target = combatTarget.transform;
+            target = combatTarget.GetComponent<Health>();
             
         }
 
         public void Cancel()
         {
             Debug.Log("Cancelling Combat");
+            GetComponent<Animator>().SetTrigger("stopAttack");
             target = null;
 
         }
