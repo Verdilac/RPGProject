@@ -42,26 +42,29 @@ namespace RPG.Combat
         }
         private void AttackBehaviour()
         {
+
+            transform.LookAt(target.transform);
             if (timeSinceLastAttack > timeBetweenAttacks)
             {
                 //This will Trigger the Hit() event
-              GetComponent<Animator>().SetTrigger("attack");
+                TriggerAttack();
                 timeSinceLastAttack = 0;
 
-                //Health healthComponent = target.GetComponent<Health>();
-                //if (healthComponent == null)
-                //{
-                //    Debug.Log("Failed To Get Reference:healthComponent");
-                //    healthComponent.TakeDamage(weaponDamage);
-                //}
 
-            } 
+
+            }
+        }
+
+        private void TriggerAttack()
+        {
+            GetComponent<Animator>().ResetTrigger("stopAttack");
+            GetComponent<Animator>().SetTrigger("attack");
         }
 
         //Animation Hit Event
         void Hit()
         {
-
+            if (target == null) return;
             target.TakeDamage(weaponDamage);
         }
 
@@ -73,6 +76,7 @@ namespace RPG.Combat
         public void Attack(CombatTarget combatTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
+          
             Debug.Log("Be Gone Thot");
             target = combatTarget.GetComponent<Health>();
             
@@ -81,11 +85,24 @@ namespace RPG.Combat
         public void Cancel()
         {
             Debug.Log("Cancelling Combat");
-            GetComponent<Animator>().SetTrigger("stopAttack");
+            StopAttack();
             target = null;
 
         }
-        
+
+        private void StopAttack()
+        {
+            GetComponent<Animator>().ResetTrigger("attack");
+            GetComponent<Animator>().SetTrigger("stopAttack");
+        }
+
+        public bool CanAttack(CombatTarget combatTarget )
+        {
+            if (combatTarget == null) return false;
+            Health targetToTest = combatTarget.GetComponent<Health>();
+            return targetToTest != null && targetToTest.GetisAlive();     
+        }
+
         
      
 
