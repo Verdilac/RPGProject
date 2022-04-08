@@ -9,19 +9,21 @@ namespace RPG.Movement
 {
     public class Mover : MonoBehaviour,IAction
     {
-   
-
 
         NavMeshAgent navMeshAgent;
-
+        Health health;
+        CapsuleCollider capsuleCollider;
         private void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-       
+            health = GetComponent<Health>();
+            capsuleCollider = GetComponent<CapsuleCollider>();
         }
 
         void Update()
         {
+            navMeshAgent.enabled = health.GetisAlive();
+            capsuleCollider.enabled = health.GetisAlive();
             UpdateAnimator();
         }
 
@@ -51,6 +53,7 @@ namespace RPG.Movement
         public void Cancel()
         {    
            navMeshAgent.isStopped = true;
+           
             
 
 
