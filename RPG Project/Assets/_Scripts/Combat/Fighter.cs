@@ -12,7 +12,7 @@ namespace RPG.Combat
         Health target;
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float  timeBetweenAttacks = 1f;
-        float timeSinceLastAttack;
+        float timeSinceLastAttack = Mathf.Infinity;
         float weaponDamage = 20;
         private void Update()
         {
@@ -94,6 +94,7 @@ namespace RPG.Combat
             Debug.Log("Cancelling Combat");
             StopAttack();
             target = null;
+
 
         }
 
