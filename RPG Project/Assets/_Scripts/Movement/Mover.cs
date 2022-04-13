@@ -10,9 +10,14 @@ namespace RPG.Movement
     public class Mover : MonoBehaviour,IAction
     {
 
-        NavMeshAgent navMeshAgent;
+        //Object References 
+        NavMeshAgent navMeshAgent;  
         Health health;
         CapsuleCollider capsuleCollider;
+
+        
+      
+       
         private void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();

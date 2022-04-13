@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!136 &4345439281525913830
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8951862248976442133}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.54
+  m_Height: 2.41
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.82, z: 0}
 --- !u!114 &1195080657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,7 +26,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4ea1000009ff0419b2fd8b093928c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPath: {fileID: 0}
+  suspicionTime: 5
   chaseDistance: 5
+  waypointDwellTime: 3
+  timeSinceArrivedAtWaypoint: Infinity
+  waypointTolerance: 1
 --- !u!114 &1195080666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRange: 2
   timeBetweenAttacks: 1
+  weaponDamage: 20
 --- !u!114 &1195080667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,20 +96,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 100
---- !u!136 &4345439281525913830
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8951862248976442133}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2.02
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &715421563710042660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -162,10 +168,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1398715568685697496, guid: 2e6fabc3f01b1fa4198544a99eca1cd1,
+        type: 3}
+      propertyPath: weaponDamage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3271719183600125192, guid: 2e6fabc3f01b1fa4198544a99eca1cd1,
         type: 3}
       propertyPath: healthPoints
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e6fabc3f01b1fa4198544a99eca1cd1, type: 3}

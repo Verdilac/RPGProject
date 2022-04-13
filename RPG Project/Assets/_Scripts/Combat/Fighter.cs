@@ -9,11 +9,21 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour,IAction
     {
+
+        //Object References 
         Health target;
+        //Complex Vars
+
+
+        //Primitives
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float  timeBetweenAttacks = 1f;
         float timeSinceLastAttack = Mathf.Infinity;
-        float weaponDamage = 20;
+        [SerializeField] float weaponDamage = 20;
+      
+      
+     
+      
         private void Update()
         {
 
