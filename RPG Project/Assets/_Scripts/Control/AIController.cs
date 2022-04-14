@@ -19,7 +19,7 @@ namespace RPG.Control
         Health health;
         Mover mover;
        [SerializeField] PatrolPath patrolPath;
-        NavMeshAgent navMeshAgent;
+        NavMeshAgent navMeshAgent; 
         
 
 
@@ -35,7 +35,7 @@ namespace RPG.Control
         [SerializeField]float timeSinceArrivedAtWaypoint = Mathf.Infinity;
         [SerializeField] float waypointTolerance = 1f;
         private int currentWaypointIndex =  0;
-       
+        [Range(0,1)][SerializeField] float patrolSpeedFraction = 0.2f;
         
         
 
@@ -95,7 +95,7 @@ namespace RPG.Control
 
         private void PatrolBehaviour()
         {
-            navMeshAgent.speed = 2;
+           
             Vector3 nextPosition = guardPosition;
 
             if(patrolPath != null)
@@ -111,7 +111,7 @@ namespace RPG.Control
 
             if(timeSinceArrivedAtWaypoint > waypointDwellTime)
             {
-                mover.StartMoveAction(nextPosition);
+                mover.StartMoveAction(nextPosition,patrolSpeedFraction);
             }
             
         }
@@ -145,7 +145,7 @@ namespace RPG.Control
         private void AttackBehaviour()
         {
             timeSinceLastSawPlayer = 0;
-            navMeshAgent.speed = 3;
+          
             fighter.Attack(player);
         }
 
